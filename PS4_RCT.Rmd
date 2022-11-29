@@ -42,11 +42,23 @@ The data can be found by going to Mushfiq Mobarak's Yale faculty page, select "d
 ```{r}
 install.packages("dplyr")
 library(dplyr)
+install.packages("haven")
+library(haven)
+
+```
+```{r}
+library(haven)
+read_dta("Round1_Controls_Table1.dta")
+read_dta("Round2.dta")
 ```
 
 
-**Answer:**
+```{r}
+read_dta("Round2.dta")
+```
 
+**Answer:**
+Round1_Controls_Table1.dta file contains information for 1900 heads of household, with 64 different levels of observation for each head of household. Round2.dta file contains 1907 observations of heads of households, with 187 levels of observation for each unique head of household. The difference between the two is that the second has more observations, and more data per observation. 
  
 ## Question: Data Description- The dataset contains many variables, some of which are not used in this exercise. Keep the following variables in the final datasets (Hint: use the `select` function in `dplyr`).** 
 
