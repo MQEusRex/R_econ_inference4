@@ -48,13 +48,14 @@ library(haven)
 ```
 ```{r}
 library(haven)
-read_dta("Round1_Controls_Table1.dta")
-read_dta("Round2.dta")
+roundone<-read_dta("Round1_Controls_Table1.dta")
+roundtwo<-read_dta("Round2.dta")
+roundone
 ```
 
 
 ```{r}
-read_dta("Round2.dta")
+roundtwo
 ```
 
 **Answer:**
@@ -106,16 +107,44 @@ For Round 2 data:
 
 
 
+
+
 **A description of each variable should appear in the column headers of the loaded data. **
 
 **Code:**
+```{r}
+round1<-select(roundone,cash,credit,info,control,q9pdcalq9,exp_total_pc_r1,hhmembers_r1,tsaving_hh_r1 ,hhh_education ,num_adltmalesr1 )
+round1
+```
+```{r}
+round2<-select(roundtwo,cash,credit,info,control,average_exp2,lit,walls_good,monga,dhaka_remit,dhaka_network,exp_total_pc_r1,subsistencer1,num_adltmalesr1,num_childrenr1,avgQ13earned,constrainedr1,bankedr1,upazila,village,migrant,total_fish,migrant_new)
+round2
+```
+
+
+
+
+
+
 
 # Analysis:
 
 ## **Question: Regress all the baseline household characteristics still included in the round 1 data  on the following three variables: $cash_i$, $credit_i$ and $info_i$, and present your results in a table. What is the equivalent table in the paper?** 
 
 **Code:**
+```{r}
+lm(q9pdcalq9~cash+credit+info,data=round1)
+lm(exp_total_pc_r1~cash+credit+info,data=round1)
+lm(hhmembers_r1~cash+credit+info,data=round1)
+lm(tsaving_hh_r1~cash+credit+info,data=round1)
+lm(hhh_education~cash+credit+info,data=round1)
+lm(num_adltmalesr1~cash+credit+info,data=round1)
 
+```
+
+```{r}
+
+```
 
 **Answer:** 
 
