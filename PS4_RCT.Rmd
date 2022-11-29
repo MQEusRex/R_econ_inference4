@@ -113,62 +113,95 @@ For Round 2 data:
 
 **Code:**
 ```{r}
-round1<-select(roundone,cash,credit,info,control,q9pdcalq9,exp_total_pc_r1,hhmembers_r1,tsaving_hh_r1 ,hhh_education ,num_adltmalesr1 )
+install.packages("labelled")
+library(labelled)
+install.packages("Hmisc")
+library(Hmisc)
+round1<-select(roundone,cash,credit,info,control,q9pdcalq9,exp_total_pc_r1,hhmembers_r1,tsaving_hh_r1 ,hhh_education ,num_adltmalesr1)
 round1
+contents(round1)
+h= lapply(round1, attr, "label")
+h
+
 ```
 ```{r}
 round2<-select(roundtwo,cash,credit,info,control,average_exp2,lit,walls_good,monga,dhaka_remit,dhaka_network,exp_total_pc_r1,subsistencer1,num_adltmalesr1,num_childrenr1,avgQ13earned,constrainedr1,bankedr1,upazila,village,migrant,total_fish,migrant_new)
 round2
+
 ```
-
-
-
-
-
-
-
 # Analysis:
 
 ## **Question: Regress all the baseline household characteristics still included in the round 1 data  on the following three variables: $cash_i$, $credit_i$ and $info_i$, and present your results in a table. What is the equivalent table in the paper?** 
 
 **Code:**
 ```{r}
-lm(q9pdcalq9~cash+credit+info,data=round1)
-lm(exp_total_pc_r1~cash+credit+info,data=round1)
-lm(hhmembers_r1~cash+credit+info,data=round1)
-lm(tsaving_hh_r1~cash+credit+info,data=round1)
-lm(hhh_education~cash+credit+info,data=round1)
-lm(num_adltmalesr1~cash+credit+info,data=round1)
+m1<-lm(q9pdcalq9~cash+credit+info,data=round1)
+m2<-lm(exp_total_pc_r1~cash+credit+info,data=round1)
+m3<-lm(hhmembers_r1~cash+credit+info,data=round1)
+m4<-lm(tsaving_hh_r1~cash+credit+info,data=round1)
+m5<-lm(hhh_education~cash+credit+info,data=round1)
+m6<-lm(num_adltmalesr1~cash+credit+info,data=round1)
+m1
+m2
+m3
+m4
+m5
+m6
 
 ```
 
 ```{r}
+install.packages("sjPlot")
+install.packages("sjmisc")
+install.packages("sjlabelled")
 
+library(sjPlot)
+library(sjmisc)
+library(sjlabelled)
+
+tablei<-tab_model(m1,m2,m3,m4,m5,m6)
+tablei
+```
+```{r}
+#just fooling around
+m7<-lm(cash~q9pdcalq9+exp_total_pc_r1+hhmembers_r1+tsaving_hh_r1 +hhh_education +num_adltmalesr1,data=round1)
+tab_model(m7)
 ```
 
-**Answer:** 
 
+
+
+**Answer:** 
+The equivalent table in the data is Table I. 
 
 ## **Question: How should the coefficients in the table above be interpreted? What should we look for in this table?**
 
 **Answer:**
+We can interpret these coefficients as the difference that accompanies this event (cash incentive, credit incentive, or info about where they are going) for a households lifestyle as compared to ones who do not have these occurrences. We should look for statistically significant differences caused by a statistically significant coefficients, which in this case there are none. 
+
 
 
 ## **Question: Using the round 2 data, regress migrant on the treatment arm indicators. What is the equivalent table in the paper?**
 
 **Code:**
+```{r}
+round2
+swiffer<-lm(migrant~cash+credit+info,data=round2)
+tab_model(swiffer)
+```
 
 **Answer:** 
-
+This is equivalent to Table II in the paper. 
 
 ## **Question: How should the coefficients in the table above be interpreted? Why is this table important?**
 
 **Answer:**
-
+All other things equal, a worker who receives the cash incentive is 23% more likely to migrate compared to a worker who receives no incentives or information. Credit incentive receivers are 21% more likely to, and information receivers' probability of migration is indeterminate due to a high p-value. 
 
 ## **Question: What is the underlying migration rate in the control group and how might this change our interpretation of the results? **
 
 **Answer:**
+The underlying migration rate in the control group is 36% (see the intercept). This makes the seemingly large coefficients less impressive as many individuals are migrating anyways, but it does not fundamentally change our interpretation of the results. 
 
 
 ## **Question: Replicate the results presented in the third row of the first three columns of table 3. Present them in a table and interpret these results. **
