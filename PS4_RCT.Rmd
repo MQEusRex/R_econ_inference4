@@ -39,6 +39,10 @@ The data can be found by going to Mushfiq Mobarak's Yale faculty page, select "d
 
 **Code:**
 
+```{r}
+install.packages("dplyr")
+library(dplyr)
+```
 
 
 **Answer:**
