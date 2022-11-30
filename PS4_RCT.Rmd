@@ -363,14 +363,14 @@ felm(average_exp2~lit+walls_good+subsistencer1+num_adltmalesr1+num_childrenr1+co
 
 
 **Answer:**
-This shows that using our instrumental variable to account for the noise in the data makes the case for migration very compelling, as show by the coefficient of 374.9. Controlling for other variables as well, this result is 333.4, which is still much higher than the less clean coefficient. It can be seen in column 6 that not controlling for these things leads to an upward bias in the estimate.
+This shows that using our instrumental variable to account for the unobserved variables in the data makes the case for migration very compelling, as show by the coefficient of 374.9. Controlling for other variables as well, this result is 333.4, which is still much higher than the less clean coefficient. It can be seen in the difference between column 7 and column 7 that not controlling for these things leads to an upward bias in the estimate.
 
 
 
 ## **Question: Why are these results different from those in columns 4 and 5 of the paper?  **
 
 **Answer:** 
-Using ITT as an instrument makes it such that the error term is sopped up by the instrument. Columns 4 and 5 display a more realistic value for the given treatment occurrences. 
+Using ITT as an instrument makes it such that the error term is sopped up by the instrument, which is due to the . Columns 4 and 5 display a more realistic value for the given treatment occurrences. 
 
 ## **Question: Why is this value particularly relevant for policy decisions in the context of this experiment.**
 
@@ -388,7 +388,7 @@ General equilibrium effects would cause drastic changes in the labor market. The
 ## **Question: One major concern that is often brought up in discussions about RCT's is the problem of external validity. It is not always clear how informative the findings from a small scale research project in one context are for policy makers working on a different scale and in different contexts. What are your thoughts on the external validity of this particular project and RCT's in general? **
 
 **Answer:**
-I think that this project displays a level of external validity that would allow it to be adopted on a large scale in the country of Bangladesh. What is less clear is how successful applying this treatment in other countries which have labor arbitrage opportunities would be. There may be cultural or other omitted variables in these countries that would stymy the success of the project. I think that RCTs are useful in general if the practitioner thereof understands its limitations especially concerning external validity. 
+I think that this project displays a level of external validity that would allow it to be adopted on a large scale in the country of Bangladesh. What is less clear is how successful applying this treatment in other countries which have labor arbitrage opportunities would be. There may be cultural or other omitted variables in these countries that would stymie the success of the project. I think that RCTs are useful in general if the practitioner thereof understands its limitations especially concerning external validity. 
 
 # Submission instructions:
 

@@ -829,9 +829,9 @@ m1</code></pre>
 <pre class="r"><code>install.packages(&quot;sjlabelled&quot;)</code></pre>
 <pre><code>## Installing package into &#39;/cloud/lib/x86_64-pc-linux-gnu-library/4.2&#39;
 ## (as &#39;lib&#39; is unspecified)</code></pre>
-<pre class="r"><code>library(sjPlot)
-library(sjmisc)</code></pre>
-<pre><code>## Install package &quot;strengejacke&quot; from GitHub (`devtools::install_github(&quot;strengejacke/strengejacke&quot;)`) to load all sj-packages at once!</code></pre>
+<pre class="r"><code>library(sjPlot)</code></pre>
+<pre><code>## #refugeeswelcome</code></pre>
+<pre class="r"><code>library(sjmisc)</code></pre>
 <pre><code>## 
 ## Attaching package: &#39;sjmisc&#39;</code></pre>
 <pre><code>## The following object is masked from &#39;package:Hmisc&#39;:
@@ -2303,20 +2303,21 @@ felm(average_exp2~lit+walls_good+subsistencer1+num_adltmalesr1+num_childrenr1+co
 ##     dhaka_remit    avgQ13earned  `migrant(fit)` 
 ##         0.37953        33.44305       333.37792</code></pre>
 <p><strong>Answer:</strong> This shows that using our instrumental
-variable to account for the noise in the data makes the case for
-migration very compelling, as show by the coefficient of 374.9.
+variable to account for the unobserved variables in the data makes the
+case for migration very compelling, as show by the coefficient of 374.9.
 Controlling for other variables as well, this result is 333.4, which is
-still much higher than the less clean coefficient. It can be seen in
-column 6 that not controlling for these things leads to an upward bias
-in the estimate.</p>
+still much higher than the less clean coefficient. It can be seen in the
+difference between column 7 and column 7 that not controlling for these
+things leads to an upward bias in the estimate.</p>
 </div>
 <div id="question-why-are-these-results-different-from-those-in-columns-4-and-5-of-the-paper" class="section level2" number="3.14">
 <h2><span class="header-section-number">3.14</span> <strong>Question:
 Why are these results different from those in columns 4 and 5 of the
 paper? </strong></h2>
 <p><strong>Answer:</strong> Using ITT as an instrument makes it such
-that the error term is sopped up by the instrument. Columns 4 and 5
-display a more realistic value for the given treatment occurrences.</p>
+that the error term is sopped up by the instrument, which is due to the
+. Columns 4 and 5 display a more realistic value for the given treatment
+occurrences.</p>
 </div>
 <div id="question-why-is-this-value-particularly-relevant-for-policy-decisions-in-the-context-of-this-experiment." class="section level2" number="3.15">
 <h2><span class="header-section-number">3.15</span> <strong>Question:
@@ -2351,7 +2352,7 @@ of external validity that would allow it to be adopted on a large scale
 in the country of Bangladesh. What is less clear is how successful
 applying this treatment in other countries which have labor arbitrage
 opportunities would be. There may be cultural or other omitted variables
-in these countries that would stymy the success of the project. I think
+in these countries that would stymie the success of the project. I think
 that RCTs are useful in general if the practitioner thereof understands
 its limitations especially concerning external validity.</p>
 </div>
