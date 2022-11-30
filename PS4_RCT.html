@@ -640,7 +640,8 @@ baseline</td>
 <p><strong>A description of each variable should appear in the column
 headers of the loaded data. </strong></p>
 <p><strong>Code:</strong></p>
-<pre class="r"><code>install.packages(&quot;labelled&quot;)</code></pre>
+<pre class="r"><code>library(dplyr)
+install.packages(&quot;labelled&quot;)</code></pre>
 <pre><code>## Installing package into &#39;/cloud/lib/x86_64-pc-linux-gnu-library/4.2&#39;
 ## (as &#39;lib&#39; is unspecified)</code></pre>
 <pre class="r"><code>library(labelled)
@@ -828,9 +829,9 @@ m1</code></pre>
 <pre class="r"><code>install.packages(&quot;sjlabelled&quot;)</code></pre>
 <pre><code>## Installing package into &#39;/cloud/lib/x86_64-pc-linux-gnu-library/4.2&#39;
 ## (as &#39;lib&#39; is unspecified)</code></pre>
-<pre class="r"><code>library(sjPlot)</code></pre>
-<pre><code>## Learn more about sjPlot with &#39;browseVignettes(&quot;sjPlot&quot;)&#39;.</code></pre>
-<pre class="r"><code>library(sjmisc)</code></pre>
+<pre class="r"><code>library(sjPlot)
+library(sjmisc)</code></pre>
+<pre><code>## Install package &quot;strengejacke&quot; from GitHub (`devtools::install_github(&quot;strengejacke/strengejacke&quot;)`) to load all sj-packages at once!</code></pre>
 <pre><code>## 
 ## Attaching package: &#39;sjmisc&#39;</code></pre>
 <pre><code>## The following object is masked from &#39;package:Hmisc&#39;:
@@ -1500,8 +1501,8 @@ R<sup>2</sup> / R<sup>2</sup> adjusted
 </td>
 </tr>
 </table>
-<p><strong>Answer:</strong> This is equivalent to Table II in the
-paper.</p>
+<p><strong>Answer:</strong> This is equivalent to Table II in the paper
+(2008 uptake rates).</p>
 </div>
 <div id="question-how-should-the-coefficients-in-the-table-above-be-interpreted-why-is-this-table-important" class="section level2" number="3.4">
 <h2><span class="header-section-number">3.4</span> <strong>Question: How
@@ -1540,14 +1541,267 @@ following command:</p>
 <p>where you can replace fevariables and ivfirststage with 0 if you are
 not using fixed effects or an instrument.</p>
 <p><strong>Code:</strong></p>
-<p><strong>Answer:</strong></p>
+<pre class="r"><code>round2</code></pre>
+<pre><code>## # A tibble: 1,907 × 22
+##     cash credit  info control average_exp2 lit     walls…¹ monga dhaka…² dhaka…³
+##    &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;        &lt;dbl&gt; &lt;dbl+l&gt;   &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+##  1     0      1     0       0          NA  4 [Can…       0    70      20      20
+##  2     0      1     0       0        1229. 4 [Can…       1   100      90      40
+##  3     0      1     0       0        1340. 4 [Can…       1   100     100      50
+##  4     0      1     0       0         819. 4 [Can…       0    70     100     100
+##  5     0      1     0       0         860. 4 [Can…       1    70      60      60
+##  6     0      1     0       0         918. 4 [Can…       1   100      80      60
+##  7     0      1     0       0         896. 1 [Can…       0    60      20      20
+##  8     0      1     0       0         770. 4 [Can…       1    70      20      20
+##  9     0      1     0       0         648. 4 [Can…       0    80      20      20
+## 10     0      1     0       0        1157. 4 [Can…       0    70      60      60
+## # … with 1,897 more rows, 12 more variables: exp_total_pc_r1 &lt;dbl&gt;,
+## #   subsistencer1 &lt;dbl&gt;, num_adltmalesr1 &lt;dbl&gt;, num_childrenr1 &lt;dbl&gt;,
+## #   avgQ13earned &lt;dbl&gt;, constrainedr1 &lt;dbl&gt;, bankedr1 &lt;dbl&gt;, upazila &lt;dbl&gt;,
+## #   village &lt;dbl&gt;, migrant &lt;dbl+lbl&gt;, total_fish &lt;dbl&gt;, migrant_new &lt;dbl+lbl&gt;,
+## #   and abbreviated variable names ¹​walls_good, ²​dhaka_remit, ³​dhaka_network</code></pre>
+<pre class="r"><code>install.packages(&quot;magrittr&quot;)</code></pre>
+<pre><code>## Installing package into &#39;/cloud/lib/x86_64-pc-linux-gnu-library/4.2&#39;
+## (as &#39;lib&#39; is unspecified)</code></pre>
+<pre class="r"><code>library(magrittr)
+round2&lt;-round2%&gt;%filter(total_fish &lt; 8000)
+round2</code></pre>
+<pre><code>## # A tibble: 1,906 × 22
+##     cash credit  info control average_exp2 lit     walls…¹ monga dhaka…² dhaka…³
+##    &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;        &lt;dbl&gt; &lt;dbl+l&gt;   &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+##  1     0      1     0       0          NA  4 [Can…       0    70      20      20
+##  2     0      1     0       0        1229. 4 [Can…       1   100      90      40
+##  3     0      1     0       0        1340. 4 [Can…       1   100     100      50
+##  4     0      1     0       0         819. 4 [Can…       0    70     100     100
+##  5     0      1     0       0         860. 4 [Can…       1    70      60      60
+##  6     0      1     0       0         918. 4 [Can…       1   100      80      60
+##  7     0      1     0       0         896. 1 [Can…       0    60      20      20
+##  8     0      1     0       0         770. 4 [Can…       1    70      20      20
+##  9     0      1     0       0         648. 4 [Can…       0    80      20      20
+## 10     0      1     0       0        1157. 4 [Can…       0    70      60      60
+## # … with 1,896 more rows, 12 more variables: exp_total_pc_r1 &lt;dbl&gt;,
+## #   subsistencer1 &lt;dbl&gt;, num_adltmalesr1 &lt;dbl&gt;, num_childrenr1 &lt;dbl&gt;,
+## #   avgQ13earned &lt;dbl&gt;, constrainedr1 &lt;dbl&gt;, bankedr1 &lt;dbl&gt;, upazila &lt;dbl&gt;,
+## #   village &lt;dbl&gt;, migrant &lt;dbl+lbl&gt;, total_fish &lt;dbl&gt;, migrant_new &lt;dbl+lbl&gt;,
+## #   and abbreviated variable names ¹​walls_good, ²​dhaka_remit, ³​dhaka_network</code></pre>
+<pre class="r"><code>library(sjPlot)
+library(sjmisc)
+library(sjlabelled)
+install.packages(&quot;lfe&quot;)</code></pre>
+<pre><code>## Installing package into &#39;/cloud/lib/x86_64-pc-linux-gnu-library/4.2&#39;
+## (as &#39;lib&#39; is unspecified)</code></pre>
+<pre class="r"><code>library(lfe)</code></pre>
+<pre><code>## Loading required package: Matrix</code></pre>
+<pre class="r"><code>regnofe&lt;-felm(average_exp2~cash+credit+info|upazila|0|village,round2)
+regnofe</code></pre>
+<pre><code>##   cash credit   info 
+##  96.57  76.74  38.52</code></pre>
+<pre class="r"><code>tab_model(regnofe)</code></pre>
+<table style="border-collapse:collapse; border:none;">
+<tr>
+<th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; ">
+ 
+</th>
+<th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">
+Total Consumption, denom<br># home last 7 days
+</th>
+</tr>
+<tr>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  text-align:left; ">
+Predictors
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+Estimates
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+CI
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+p
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+Cash Incentive
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+96.57
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+28.69 – 164.44
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<strong>0.005</strong>
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+Credit Incentive
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+76.74
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+10.75 – 142.73
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<strong>0.023</strong>
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+Information about Wages<br>and Employment at<br>Destinations
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+38.52
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-61.45 – 138.50
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.450
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+N <sub>upazila</sub>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+14
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;">
+Observations
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3">
+1869
+</td>
+</tr>
+</table>
+<p><strong>Answer:</strong> I was able to use “upazila” as a fixed
+effect to replicate the consumption data. The coefficients show
+consumption levels in households where a worker has migrated using the
+given treatments.</p>
 </div>
 <div id="question-what-happens-to-these-estimates-if-you-drop-the-fixed-effects-from-the-specification.-why" class="section level2" number="3.7">
 <h2><span class="header-section-number">3.7</span> <strong>Question:
 What happens to these estimates if you drop the fixed effects from the
 specification. Why? </strong></h2>
 <p><strong>Code:</strong></p>
+<pre class="r"><code>library(sjPlot)
+library(sjmisc)
+library(sjlabelled)
+install.packages(&quot;lfe&quot;)</code></pre>
+<pre><code>## Installing package into &#39;/cloud/lib/x86_64-pc-linux-gnu-library/4.2&#39;
+## (as &#39;lib&#39; is unspecified)</code></pre>
+<pre class="r"><code>library(lfe)
+regnofe&lt;-felm(average_exp2~cash+credit+info|0|0|village,round2)
+regnofe</code></pre>
+<pre><code>## (Intercept)        cash      credit        info 
+##     954.133      88.051      49.136      -6.745</code></pre>
+<pre class="r"><code>tab_model(regnofe)</code></pre>
+<table style="border-collapse:collapse; border:none;">
+<tr>
+<th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; ">
+ 
+</th>
+<th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">
+Total Consumption, denom<br># home last 7 days
+</th>
+</tr>
+<tr>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  text-align:left; ">
+Predictors
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+Estimates
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+CI
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+p
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+(Intercept)
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+954.13
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+893.93 – 1014.33
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<strong>&lt;0.001</strong>
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+Cash Incentive
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+88.05
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+11.96 – 164.14
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<strong>0.023</strong>
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+Credit Incentive
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+49.14
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-28.50 – 126.77
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.215
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+Information about Wages<br>and Employment at<br>Destinations
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-6.75
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-119.91 – 106.42
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.907
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;">
+Observations
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3">
+1869
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+R<sup>2</sup> / R<sup>2</sup> adjusted
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.007 / 0.005
+</td>
+</tr>
+</table>
 <p><strong>Answer:</strong></p>
+<p>Dropping the fixed effect underestimates the cash incentive,
+underestimates the credit incentive, and underestimates the information
+coefficient. This happens because dropping the fixed effects then
+transfers the effects of un-noted variables onto the incentive
+coefficients, thereby biasing them all downward.</p>
 </div>
 <div id="question-replicate-the-results-presented-in-the-third-row-of-the-fourth-and-fifth-columns-of-table-3.-what-happens-to-the-coefficient-and-standard-errors-is-this-surprising-what-does-this-tell-us" class="section level2" number="3.8">
 <h2><span class="header-section-number">3.8</span> <strong>Question:
@@ -1557,14 +1811,386 @@ Is this surprising? What does this tell us?</strong></h2>
 <p>Hint: You will need to construct a new variable to run these
 estimates.</p>
 <p><strong>Code:</strong></p>
-<p><strong>Answer:</strong></p>
+<p>#create an intent to treat variable</p>
+<pre class="r"><code>#column4
+round2$r2itt&lt;-round2$cash+round2$credit
+round2</code></pre>
+<pre><code>## # A tibble: 1,906 × 23
+##     cash credit  info control average_exp2 lit     walls…¹ monga dhaka…² dhaka…³
+##    &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;        &lt;dbl&gt; &lt;dbl+l&gt;   &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+##  1     0      1     0       0          NA  4 [Can…       0    70      20      20
+##  2     0      1     0       0        1229. 4 [Can…       1   100      90      40
+##  3     0      1     0       0        1340. 4 [Can…       1   100     100      50
+##  4     0      1     0       0         819. 4 [Can…       0    70     100     100
+##  5     0      1     0       0         860. 4 [Can…       1    70      60      60
+##  6     0      1     0       0         918. 4 [Can…       1   100      80      60
+##  7     0      1     0       0         896. 1 [Can…       0    60      20      20
+##  8     0      1     0       0         770. 4 [Can…       1    70      20      20
+##  9     0      1     0       0         648. 4 [Can…       0    80      20      20
+## 10     0      1     0       0        1157. 4 [Can…       0    70      60      60
+## # … with 1,896 more rows, 13 more variables: exp_total_pc_r1 &lt;dbl&gt;,
+## #   subsistencer1 &lt;dbl&gt;, num_adltmalesr1 &lt;dbl&gt;, num_childrenr1 &lt;dbl&gt;,
+## #   avgQ13earned &lt;dbl&gt;, constrainedr1 &lt;dbl&gt;, bankedr1 &lt;dbl&gt;, upazila &lt;dbl&gt;,
+## #   village &lt;dbl&gt;, migrant &lt;dbl+lbl&gt;, total_fish &lt;dbl&gt;, migrant_new &lt;dbl+lbl&gt;,
+## #   r2itt &lt;dbl&gt;, and abbreviated variable names ¹​walls_good, ²​dhaka_remit,
+## #   ³​dhaka_network</code></pre>
+<pre class="r"><code>r2c4&lt;-felm(average_exp2~r2itt|upazila|0|village,round2)
+r2c4</code></pre>
+<pre><code>## r2itt 
+## 68.36</code></pre>
+<pre class="r"><code>#column5
+r2c5&lt;-felm(average_exp2~r2itt+lit+walls_good+subsistencer1+num_adltmalesr1+num_childrenr1+constrainedr1+bankedr1+exp_total_pc_r1+monga+dhaka_network+dhaka_remit+avgQ13earned|upazila|0|village,round2)
+r2c5</code></pre>
+<pre><code>##           r2itt             lit      walls_good   subsistencer1 num_adltmalesr1 
+##        60.13928        -9.58952        97.81006      -328.90443       -40.54818 
+##  num_childrenr1   constrainedr1        bankedr1 exp_total_pc_r1           monga 
+##      -129.07834       -47.22076        51.82938         0.07513        -0.27867 
+##   dhaka_network     dhaka_remit    avgQ13earned 
+##         0.41853         0.61552        53.50243</code></pre>
+<pre class="r"><code>tab_model(r2c4,r2c5)</code></pre>
+<table style="border-collapse:collapse; border:none;">
+<tr>
+<th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; ">
+ 
+</th>
+<th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">
+Total Consumption, denom<br># home last 7 days
+</th>
+<th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">
+Total Consumption, denom<br># home last 7 days
+</th>
+</tr>
+<tr>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  text-align:left; ">
+Predictors
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+Estimates
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+CI
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+p
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+Estimates
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+CI
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  col7">
+p
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+Cash Incentive
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+68.36
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+8.36 – 128.36
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<strong>0.026</strong>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+60.14
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+1.92 – 118.36
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7">
+<strong>0.043</strong>
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+Highest readin/writing<br>ability of HHD
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-9.59
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-29.24 – 10.06
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7">
+0.339
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+Wall tin, brick, wood
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+97.81
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+49.39 – 146.23
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7">
+<strong>&lt;0.001</strong>
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+Share of food exp in<br>total exp, R1
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-328.90
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-556.62 – -101.19
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7">
+<strong>0.005</strong>
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+Number of adult (&gt;14)<br>males in R1
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-40.55
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-67.71 – -13.38
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7">
+<strong>0.003</strong>
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+Number of small children<br>(&lt;9) in R1
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-129.08
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-155.13 – -103.02
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7">
+<strong>&lt;0.001</strong>
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+Applied &amp; refused // did<br>not apply because of<br>insufficient
+collateral <br>R 1
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-47.22
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-128.40 – 33.96
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7">
+0.254
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+Did you recieved credit<br>from NGO, Fam &amp; Frienfs,<br>or Money
+Lender? R 1
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+51.83
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+7.32 – 96.34
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7">
+<strong>0.022</strong>
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+Total exp per capita per<br>month, R1
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.08
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.00 – 0.15
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7">
+0.055
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+Chances Monga next year
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.28
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-1.44 – 0.88
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7">
+0.637
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+Chances network in Dhaka
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.42
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.33 – 1.16
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7">
+0.272
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+Chances findig job in<br>Dhaka
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.62
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.16 – 1.39
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7">
+0.121
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+Average skill Score<br>received by network
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+53.50
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+21.76 – 85.24
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7">
+<strong>0.001</strong>
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+N
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+14 <sub>upazila</sub>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+14 <sub>upazila</sub>
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;">
+Observations
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3">
+1869
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3">
+1825
+</td>
+</tr>
+</table>
+<p><strong>Answer:</strong> The coefficients become lower, as do the
+standard errors, but to a lesser extent. This is not surprising as the
+intention to treat group contains people who are in the treatment group
+but for what ever reason did not do the treatment. This dilutes the
+effect as some in the group did not actually receive the treatment.
+Controlling for other variables makes it even lower as some of the
+effect originally attributed to the ITT is actually soaked up by other
+factors.</p>
 </div>
 <div id="question-why-is-the-header-of-the-first-five-columns-of-table-3-itt.-what-is-meant-by-this-and-what-does-this-tell-us-about-how-we-should-interpret-these-results" class="section level2" number="3.9">
 <h2><span class="header-section-number">3.9</span> <strong>Question: Why
 is the header of the first five columns of table 3 “ITT”. What is meant
 by this and what does this tell us about how we should interpret these
 results?</strong></h2>
-<p><strong>Answer:</strong></p>
+<p><strong>Answer:</strong> ITT means “intention to treat.” The first 5
+columns are labelled ITT as it is a great way to see how this treatment
+would affect the population in the real world. The observations included
+in this regression are everyone randomly assigned to the treatment group
+whether they fully participated in the study or not. We should expect
+the results to be downward biased when thinking about how someone who
+was actually treated’s household characteristics.</p>
 </div>
 <div id="question-we-are-interested-in-estimating-how-migration-affects-total-expenditures-for-the-households-that-were-induced-to-migrate-by-the-cash-and-credit-treatments-as-follows" class="section level2" number="3.10">
 <h2><span class="header-section-number">3.10</span> <strong>Question: We
@@ -1584,12 +2210,39 @@ between the households that select into migration versus those that do
 not. Propose a source of exogenous variation that can be used as an
 instrument to isolate “good” exogenous variation in migration.
 </strong></p>
-<p><strong>Answer:</strong></p>
+<p><strong>Answer:</strong> I propose ITT, the intention to treat
+variable, as an instrumental variable. It covaries with our x term,
+migrant, as if someone gets treated the more they are likely to migrate.
+It should not co-vary with the error term. Also, it is exogenous, as
+this cannot change, outside of the random initial selection, so it does
+not break our instrumental variable assumptions.</p>
 </div>
 <div id="question-what-is-the-first-stage-specification" class="section level2" number="3.11">
 <h2><span class="header-section-number">3.11</span> <strong>Question:
 What is the first stage specification?</strong></h2>
 <p><strong>Answer:</strong></p>
+<p>migrant=tilda(0)+tilda(1)*(ITT)+error</p>
+<pre class="r"><code>ittreg&lt;-lm(migrant~r2itt,data=round2)
+summary(ittreg)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = migrant ~ r2itt, data = round2)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -0.5797 -0.5797  0.4203  0.4203  0.6399 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  0.36013    0.02004  17.973   &lt;2e-16 ***
+## r2itt        0.21960    0.02429   9.043   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.4896 on 1868 degrees of freedom
+##   (36 observations deleted due to missingness)
+## Multiple R-squared:  0.04194,    Adjusted R-squared:  0.04142 
+## F-statistic: 81.77 on 1 and 1868 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 <div id="question-estimate-the-first-stage-and-check-that-you-have-a-strong-instrument-for-migration." class="section level2" number="3.12">
 <h2><span class="header-section-number">3.12</span> <strong>Question:
@@ -1598,7 +2251,35 @@ migration.</strong></h2>
 <p>Note: The first stage results reported in the paper appendix may
 differ slightly as explained in the table footnote.</p>
 <p><strong>Code:</strong></p>
-<p><strong>Answer:</strong></p>
+<pre class="r"><code>fereg&lt;-felm(migrant~r2itt,data = round2)
+summary(fereg)</code></pre>
+<pre><code>## 
+## Call:
+##    felm(formula = migrant ~ r2itt, data = round2) 
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -0.5797 -0.5797  0.4203  0.4203  0.6399 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  0.36013    0.02004  17.973   &lt;2e-16 ***
+## r2itt        0.21960    0.02429   9.043   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.4896 on 1868 degrees of freedom
+##   (36 observations deleted due to missingness)
+## Multiple R-squared(full model): 0.04194   Adjusted R-squared: 0.04142 
+## Multiple R-squared(proj model): 0.04194   Adjusted R-squared: 0.04142 
+## F-statistic(full model):81.77 on 1 and 1868 DF, p-value: &lt; 2.2e-16 
+## F-statistic(proj model): 81.77 on 1 and 1868 DF, p-value: &lt; 2.2e-16</code></pre>
+<p><strong>Answer:</strong> The first stage estimate for ITT is 0.58.
+This process gets rid of the bad variation in migrant. As you can see
+from the regression output, the exclusion restriction holds, as there is
+not significant covariance between the error term and migrant. Also, ITT
+does co-vary with migrant, as those treated are much more likely to
+migrate.</p>
 </div>
 <div id="question-use-your-instrument-to-estimate-the-late-local-average-treatment-effect-the-impact-of-migration-on-total-consumption-for-those-induced-to-migrate-by-the-treatment-as-in-columns-6-and-7-of-table-3-in-the-paper.-interpret-your-results." class="section level2" number="3.13">
 <h2><span class="header-section-number">3.13</span> <strong>Question:
@@ -1609,19 +2290,41 @@ paper. Interpret your results. </strong></h2>
 <p>Note: if you wish to replicate the paper’s coefficients exactly, you
 will need to use multiple instruments, one for each treatment arm.</p>
 <p><strong>Code:</strong></p>
-<p><strong>Answer:</strong></p>
+<pre class="r"><code>#column 6
+felm(average_exp2~1|upazila|(migrant~r2itt)|village,round2)</code></pre>
+<pre><code>## `migrant(fit)` 
+##          374.9</code></pre>
+<pre class="r"><code>#column 7
+felm(average_exp2~lit+walls_good+subsistencer1+num_adltmalesr1+num_childrenr1+constrainedr1+bankedr1+exp_total_pc_r1+monga+dhaka_network+dhaka_remit+avgQ13earned|upazila|(migrant~r2itt)|village,round2)</code></pre>
+<pre><code>##             lit      walls_good   subsistencer1 num_adltmalesr1  num_childrenr1 
+##       -11.66080       111.31515      -171.99398       -71.73912      -145.15791 
+##   constrainedr1        bankedr1 exp_total_pc_r1           monga   dhaka_network 
+##       -10.20403        42.40020         0.08039        -0.30925         0.30382 
+##     dhaka_remit    avgQ13earned  `migrant(fit)` 
+##         0.37953        33.44305       333.37792</code></pre>
+<p><strong>Answer:</strong> This shows that using our instrumental
+variable to account for the noise in the data makes the case for
+migration very compelling, as show by the coefficient of 374.9.
+Controlling for other variables as well, this result is 333.4, which is
+still much higher than the less clean coefficient. It can be seen in
+column 6 that not controlling for these things leads to an upward bias
+in the estimate.</p>
 </div>
 <div id="question-why-are-these-results-different-from-those-in-columns-4-and-5-of-the-paper" class="section level2" number="3.14">
 <h2><span class="header-section-number">3.14</span> <strong>Question:
 Why are these results different from those in columns 4 and 5 of the
 paper? </strong></h2>
-<p><strong>Answer:</strong></p>
+<p><strong>Answer:</strong> Using ITT as an instrument makes it such
+that the error term is sopped up by the instrument. Columns 4 and 5
+display a more realistic value for the given treatment occurrences.</p>
 </div>
 <div id="question-why-is-this-value-particularly-relevant-for-policy-decisions-in-the-context-of-this-experiment." class="section level2" number="3.15">
 <h2><span class="header-section-number">3.15</span> <strong>Question:
 Why is this value particularly relevant for policy decisions in the
 context of this experiment.</strong></h2>
-<p><strong>Answer:</strong></p>
+<p><strong>Answer:</strong> Policy makers would use these corrected
+values to estimate greater returns to this program if implemented. Thus,
+it would be more likely to be enacted.</p>
 </div>
 <div id="question-suppose-a-policy-maker-found-these-results-so-compelling-that-they-decided-to-make-this-a-national-policy.-how-would-general-equilibrium-effects-potentially-change-the-impacts-of-this-policy-if-it-was-implemented-in-a-very-large-scale-way" class="section level2" number="3.16">
 <h2><span class="header-section-number">3.16</span> <strong>Question:
@@ -1629,7 +2332,11 @@ Suppose a policy maker found these results so compelling that they
 decided to make this a national policy. How would general equilibrium
 effects potentially change the impacts of this policy if it was
 implemented in a very large scale way?</strong></h2>
-<p><strong>Answer:</strong></p>
+<p><strong>Answer:</strong> General equilibrium effects would cause
+drastic changes in the labor market. The exploitation of this labor
+arbitrage situation would reduce the payoff for further people willing
+to trade their labor in one locale for labor the other. It would level
+the playing field and thus reduce the return of investing in this.</p>
 </div>
 <div id="question-one-major-concern-that-is-often-brought-up-in-discussions-about-rcts-is-the-problem-of-external-validity.-it-is-not-always-clear-how-informative-the-findings-from-a-small-scale-research-project-in-one-context-are-for-policy-makers-working-on-a-different-scale-and-in-different-contexts.-what-are-your-thoughts-on-the-external-validity-of-this-particular-project-and-rcts-in-general" class="section level2" number="3.17">
 <h2><span class="header-section-number">3.17</span> <strong>Question:
@@ -1639,7 +2346,14 @@ the findings from a small scale research project in one context are for
 policy makers working on a different scale and in different contexts.
 What are your thoughts on the external validity of this particular
 project and RCT’s in general? </strong></h2>
-<p><strong>Answer:</strong></p>
+<p><strong>Answer:</strong> I think that this project displays a level
+of external validity that would allow it to be adopted on a large scale
+in the country of Bangladesh. What is less clear is how successful
+applying this treatment in other countries which have labor arbitrage
+opportunities would be. There may be cultural or other omitted variables
+in these countries that would stymy the success of the project. I think
+that RCTs are useful in general if the practitioner thereof understands
+its limitations especially concerning external validity.</p>
 </div>
 </div>
 <div id="submission-instructions" class="section level1" number="4">

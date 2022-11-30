@@ -113,6 +113,7 @@ For Round 2 data:
 
 **Code:**
 ```{r}
+library(dplyr)
 install.packages("labelled")
 library(labelled)
 install.packages("Hmisc")
@@ -191,7 +192,7 @@ tab_model(swiffer)
 ```
 
 **Answer:** 
-This is equivalent to Table II in the paper. 
+This is equivalent to Table II in the paper (2008 uptake rates). 
 
 ## **Question: How should the coefficients in the table above be interpreted? Why is this table important?**
 
@@ -216,20 +217,55 @@ where you can replace fevariables and ivfirststage with 0 if you are not using f
 
 
 **Code:**
+```{r}
+round2
+```
+
+```{r}
+install.packages("magrittr")
+library(magrittr)
+round2<-round2%>%filter(total_fish < 8000)
+round2
+
+```
+
+```{r}
+library(sjPlot)
+library(sjmisc)
+library(sjlabelled)
+install.packages("lfe")
+library(lfe)
+regnofe<-felm(average_exp2~cash+credit+info|upazila|0|village,round2)
+regnofe
+tab_model(regnofe)
+```
+
+
 
 
 
 
 **Answer:**
-
+I was able to use "upazila" as a fixed effect to replicate the consumption data. The coefficients show consumption levels in households where a worker has migrated using the given treatments. 
 
 ## **Question: What happens to these estimates if you drop the fixed effects from the specification. Why? **
 
 **Code:**
+```{r}
+library(sjPlot)
+library(sjmisc)
+library(sjlabelled)
+install.packages("lfe")
+library(lfe)
+regnofe<-felm(average_exp2~cash+credit+info|0|0|village,round2)
+regnofe
+tab_model(regnofe)
+```
 
 
 **Answer:**
 
+Dropping the fixed effect underestimates the cash incentive, underestimates the credit incentive, and underestimates the information coefficient. This happens because dropping the fixed effects then transfers the effects of un-noted variables onto the incentive coefficients, thereby biasing them all downward. 
 
 
 ## **Question: Replicate the results presented in the third row of the fourth and fifth columns of table 3. What happens to the coefficient and standard errors? Is this surprising? What does this tell us?**
@@ -239,15 +275,36 @@ Hint: You will need to construct a new variable to run these estimates.
 
 **Code:**
 
+#create an intent to treat variable
+```{r}
+
+
+
+
+#column4
+round2$r2itt<-round2$cash+round2$credit
+round2
+r2c4<-felm(average_exp2~r2itt|upazila|0|village,round2)
+r2c4
+
+#column5
+r2c5<-felm(average_exp2~r2itt+lit+walls_good+subsistencer1+num_adltmalesr1+num_childrenr1+constrainedr1+bankedr1+exp_total_pc_r1+monga+dhaka_network+dhaka_remit+avgQ13earned|upazila|0|village,round2)
+r2c5
+tab_model(r2c4,r2c5)
+```
+
 
 
 **Answer:**
+The coefficients become lower, as do the standard errors, but to a lesser extent. This is not surprising as the intention to treat group contains people who are in the treatment group but for what ever reason did not do the treatment. This dilutes the effect as some in the group did not actually receive the treatment.  Controlling for other variables makes it even lower as some of the effect originally attributed to the ITT is actually soaked up by other factors. 
+
+
 
 
 ## **Question: Why is the header of the first five columns of table 3 "ITT". What is meant by this and what does this tell us about how we should interpret these results?**
 
 **Answer:**
-
+ITT means "intention to treat." The first 5 columns are labelled ITT as it is a great way to see how this treatment would affect the population in the real world. The observations included in this regression are everyone randomly assigned to the treatment group whether they fully participated in the study or not. We should expect the results to be downward biased when thinking about how someone who was actually treated's household characteristics. 
 
 ## **Question: We are interested in estimating how migration affects total expenditures for the households that were induced to migrate by the cash and credit treatments as follows,**
 
@@ -257,11 +314,19 @@ $$
 **where $Migrate_{ivj}$ is dummy indicator for if a member of household i in village v in subdistrict j migrated, $X_{ivj}$ is a vector of control variables and $\varphi_j$ are the subdistrict fixed effects. However it is not possible to identify in the data which households were induced by the treatment vs those who would have migrated  either way. Furthermore, there is likely substantial selection between the households that select into migration versus those that do not. Propose a source of exogenous variation that can be used as an instrument to isolate "good" exogenous variation in migration. **
 
 **Answer:**
- 
+ I propose ITT, the intention to treat variable, as an instrumental variable. It covaries with our x term, migrant, as if someone gets treated the more they are likely to migrate. It should not co-vary with the error term. Also, it is exogenous, as this cannot change, outside of the random initial selection, so it does not break our instrumental variable assumptions. 
 
 ## **Question: What is the first stage specification?**
 
 **Answer:**
+
+migrant=tilda(0)+tilda(1)*(ITT)+error
+
+
+```{r}
+ittreg<-lm(migrant~r2itt,data=round2)
+summary(ittreg)
+```
 
 
 ## **Question: Estimate the first stage and check that you have a strong instrument for migration.**
@@ -269,10 +334,14 @@ $$
  Note: The first stage results reported in the paper appendix may differ slightly as explained in the table footnote.  
 
 **Code:**
+```{r}
+fereg<-felm(migrant~r2itt,data = round2)
+summary(fereg)
+```
 
 
 **Answer:**
-
+The first stage estimate for ITT is 0.58. This process gets rid of the bad variation in migrant. As you can see from the regression output, the exclusion restriction holds, as there is not significant covariance between the error term and migrant. Also, ITT does co-vary with migrant, as those treated are much more likely to migrate. 
 
 ## **Question: Use your instrument to estimate the LATE (Local Average Treatment Effect), the impact of migration on total consumption for those induced to migrate by the treatment, as in columns 6 and 7 of table 3 in the paper. Interpret your results. **
 
@@ -280,30 +349,46 @@ Note: if you wish to replicate the paper's coefficients exactly, you will need t
 
 **Code:**
 
+```{r}
+#column 6
+felm(average_exp2~1|upazila|(migrant~r2itt)|village,round2)
+
+```
+```{r}
+#column 7
+felm(average_exp2~lit+walls_good+subsistencer1+num_adltmalesr1+num_childrenr1+constrainedr1+bankedr1+exp_total_pc_r1+monga+dhaka_network+dhaka_remit+avgQ13earned|upazila|(migrant~r2itt)|village,round2)
+```
+
+
+
 
 **Answer:**
+This shows that using our instrumental variable to account for the noise in the data makes the case for migration very compelling, as show by the coefficient of 374.9. Controlling for other variables as well, this result is 333.4, which is still much higher than the less clean coefficient. It can be seen in column 6 that not controlling for these things leads to an upward bias in the estimate.
 
 
 
 ## **Question: Why are these results different from those in columns 4 and 5 of the paper?  **
 
 **Answer:** 
-
+Using ITT as an instrument makes it such that the error term is sopped up by the instrument. Columns 4 and 5 display a more realistic value for the given treatment occurrences. 
 
 ## **Question: Why is this value particularly relevant for policy decisions in the context of this experiment.**
 
 **Answer:**
-
+Policy makers would use these corrected values to estimate greater returns to this program if implemented. Thus, it would be more likely to be enacted. 
 
 ## **Question: Suppose a policy maker found these results so compelling that they decided to make this a national policy. How would general equilibrium effects potentially change the impacts of this policy if it was implemented in a very large scale way?**
 
 **Answer:**
+General equilibrium effects would cause drastic changes in the labor market. The exploitation of this labor arbitrage situation would reduce the payoff for further people willing to trade their labor in one locale for labor the other. It would level the playing field and thus reduce the return of investing in this.
+
+
 
 
 ## **Question: One major concern that is often brought up in discussions about RCT's is the problem of external validity. It is not always clear how informative the findings from a small scale research project in one context are for policy makers working on a different scale and in different contexts. What are your thoughts on the external validity of this particular project and RCT's in general? **
 
 **Answer:**
-
+I think that this project displays a level of external validity that would allow it to be adopted on a large scale in the country of Bangladesh. What is less clear is how successful applying this treatment in other countries which have labor arbitrage opportunities would be. There may be cultural or other omitted variables in these countries that would stymy the success of the project. I think that RCTs are useful in general if the practitioner thereof understands its limitations especially concerning external validity. 
 
 # Submission instructions:
 
